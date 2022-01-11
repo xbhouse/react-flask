@@ -1,0 +1,352 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "description" : "blueprint",
+    "version" : "3.0",
+    "title" : "Swagger blueprint",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "someone@somewhere.com"
+    },
+    "license" : {
+      "name" : "something",
+      "url" : "http://some-url"
+    }
+  },
+  "servers" : [ {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/bkkhoo/test/0.9"
+  } ],
+  "tags" : [ {
+    "name" : "blueprint",
+    "description" : "operations on blueprint"
+  }, {
+    "name" : "user",
+    "description" : "operations on user"
+  } ],
+  "paths" : {
+    "/api/blueprints" : {
+      "get" : {
+        "tags" : [ "blueprint" ],
+        "summary" : "get all blueprints",
+        "operationId" : "listBlueprints",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "blueprint" ],
+        "summary" : "create blueprint",
+        "operationId" : "createBlueprint",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/blueprint"
+              }
+            }
+          },
+          "description" : "create blueprint object",
+          "required" : true
+        }
+      }
+    },
+    "/api/blueprints/{name}" : {
+      "get" : {
+        "tags" : [ "blueprint" ],
+        "summary" : "get blueprint by name",
+        "operationId" : "getBlueprint",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "description" : "The blueprint to get",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/blueprint"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid blueprint name supplied"
+          },
+          "404" : {
+            "description" : "blueprint not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "blueprint" ],
+        "summary" : "updated blueprint",
+        "operationId" : "updateBlueprint",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "description" : "name of blueprint to update",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid blueprint supplied"
+          },
+          "404" : {
+            "description" : "blueprint not found"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/blueprint"
+              }
+            }
+          },
+          "description" : "updated user object",
+          "required" : true
+        }
+      },
+      "delete" : {
+        "tags" : [ "blueprint" ],
+        "summary" : "delete blueprint",
+        "operationId" : "deleteBlueprint",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "path",
+          "description" : "name of blueprint to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid blueprint supplied"
+          },
+          "404" : {
+            "description" : "blueprint not found"
+          }
+        }
+      }
+    },
+    "/api/users" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "get all users",
+        "operationId" : "listUsers",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "create user",
+        "operationId" : "createUser",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/user"
+              }
+            }
+          },
+          "description" : "create user object",
+          "required" : true
+        }
+      }
+    },
+    "/api/users/{username}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "get user by username",
+        "operationId" : "getUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "The username that get",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/user"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid username supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "updated user",
+        "operationId" : "updateUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "name of the user to update",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid user supplied"
+          },
+          "404" : {
+            "description" : "user not found"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/user"
+              }
+            }
+          },
+          "description" : "updated user object",
+          "required" : true
+        }
+      },
+      "delete" : {
+        "tags" : [ "user" ],
+        "summary" : "delete user",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "username",
+          "in" : "path",
+          "description" : "the name of the user to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid username supplied"
+          },
+          "404" : {
+            "description" : "user not found"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "user" : {
+        "type" : "object",
+        "required" : [ "id", "username" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid",
+            "description" : "might not be necessary, since soeid is unique"
+          },
+          "username" : {
+            "type" : "string",
+            "description" : "soe id"
+          },
+          "cmpRequests" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "cmp" : {
+                  "type" : "string",
+                  "description" : "cmp request id, not sure what the abstraction tool provide"
+                },
+                "status" : {
+                  "type" : "string",
+                  "enum" : [ "pending", "completed", "failed" ]
+                }
+              }
+            }
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "user status",
+            "enum" : [ "pending", "active", "incative" ]
+          }
+        }
+      },
+      "blueprint" : {
+        "type" : "object",
+        "required" : [ "id", "name", "cluster", "user" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "cluster" : {
+            "type" : "string",
+            "description" : "openshift cluster where blueprint is deployed"
+          },
+          "user" : {
+            "type" : "string",
+            "description" : "user owner of this blueprint"
+          },
+          "createDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "exempt" : {
+            "type" : "boolean",
+            "description" : "exemp blueprint from auto delete after X days"
+          },
+          "region" : {
+            "type" : "string",
+            "description" : "region/datacenter where blueprint is deployed",
+            "enum" : [ "NAM", "LTAM", "APAC", "EU" ]
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "status od the blueprint",
+            "enum" : [ "pending", "active", "deleted" ]
+          }
+        }
+      }
+    }
+  }
+}
