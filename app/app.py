@@ -13,4 +13,4 @@ def get_docs():
     print('serving docs')
     return render_template('swaggerui.html')
 
-app.run(use_reloader=True, debug=False)
+app.run(host='0.0.0.0', use_reloader=True, debug=False)
