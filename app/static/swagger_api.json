@@ -13,10 +13,6 @@
       "url" : "http://some-url"
     }
   },
-  "servers" : [ {
-    "description" : "SwaggerHub API Auto Mocking",
-    "url" : "https://virtserver.swaggerhub.com/bkkhoo/test/0.9"
-  } ],
   "tags" : [ {
     "name" : "blueprint",
     "description" : "operations on blueprint"
