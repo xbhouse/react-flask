@@ -13,10 +13,4 @@ def get_docs():
     print('serving docs')
     return render_template('swaggerui.html')
 
-@app.route('/api')
-def get_api():
-    hello_dict = {'en': 'Hello', 'es': 'Hola'}
-    lang = request.args.get('lang')
-    return jsonify(hello_dict[lang])
-
 app.run(use_reloader=True, debug=False)
