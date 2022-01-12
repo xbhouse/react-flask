@@ -1,0 +1,18 @@
+version: "3"
+services:
+  backend:
+    container_name: flask-backend
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile
+    image: "quay.io/bhouse/react-flask:1.0"
+    ports:
+      - "5000:5000"
+  frontend:
+    container_name: react-frontend
+    build:
+      context: ./app/frontend
+      dockerfile: ./Dockerfile
+    image: "quay.io/bhouse/react-flask-ui:1.0"
+    ports:
+      - "3000:3000"
