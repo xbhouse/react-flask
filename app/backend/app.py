@@ -13,8 +13,6 @@ def get_docs():
   print('serving docs')
   return render_template('swaggerui.html')
 
-
-
 @app.route('/api/users', methods=['GET'])
 def get_users():
   return jsonify(user)
