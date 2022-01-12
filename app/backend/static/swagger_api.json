@@ -1,9 +1,9 @@
 {
   "openapi" : "3.0.0",
   "info" : {
-    "description" : "blueprint",
+    "description" : "Blueprint",
     "version" : "3.0",
-    "title" : "Swagger blueprint",
+    "title" : "Swagger - Blueprint API",
     "termsOfService" : "http://swagger.io/terms/",
     "contact" : {
       "email" : "someone@somewhere.com"
