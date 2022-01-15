@@ -1,17 +1,8 @@
 # import modules
 from flask import Flask, request, jsonify, render_template, make_response
 from flask_cors import CORS
-from pymongo import MongoClient
-from dotenv import load_dotenv
-import os
 import datetime
 from uuid import uuid4
-
-# set up mongo client
-load_dotenv()
-host = os.environ.get("mongo_host")
-port = os.environ.get("mongo_port")
-client = MongoClient(f'mongodb://{host}:{port}')
 
 app = Flask(__name__)
 CORS(app)
@@ -119,8 +110,6 @@ def delete_user(username):
     response = {'message': f'{username} does not exist'}
   return make_response(jsonify(response), status)
 
-  
-
 
 # Blueprint endpoints -- mocked for now
 
@@ -166,7 +155,6 @@ def create_blueprint():
   return make_response(jsonify(response), status)
 
 
-
 # Get a blueprint by ID
 @app.route('/api/blueprints/<blueprint_id>', methods=['GET'])
 def get_blueprint(blueprint_id):
@@ -186,6 +174,7 @@ def update_blueprint(blueprint_id):
   # if blueprint exists
   # delete
   # add new one 
+  # return response
 
 
 # Delete a blueprint by ID
@@ -201,9 +190,6 @@ def delete_blueprint(name):
   return make_response(jsonify(response), status)
 
 
-
-
-
 # Helpers
 
 def search_blueprints(name, user):
@@ -213,7 +199,6 @@ def search_blueprints(name, user):
       found = True
       break
   return found
-
 
 
 if __name__ == '__main__':
