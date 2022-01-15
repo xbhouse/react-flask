@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# User endpoint testing
+echo "-----------------------------------------"
 echo "POST user"
 # POST user
 curl -X POST -H \
@@ -19,3 +21,12 @@ curl -X PUT \
   -d cmp=1 \
   -d cmpStatus=pending \
   http://localhost:5000/api/users/bh123
+
+# Blueprint endpoint testing  
+echo "-----------------------------------------"
+echo "POST blueprint"
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -H "X-Forwarded-User: 123456" \
+  -d '{"name": "app1", "cluster": "elab-0", "user": "test"}' \
+  http://localhost:5000/api/blueprints
