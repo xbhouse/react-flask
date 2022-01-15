@@ -1,9 +1,9 @@
-FROM python:3.8-alpine
-RUN apk update 
-RUN python3 -m pip install --no-cache-dir pipenv
-WORKDIR /usr/src/app
-COPY Pipfile Pipfile.lock setup.sh ./
+# for local development
+FROM registry.redhat.io/rhel8/python-38:1-77
+ENV HOME /opt/blueprint
+ENV APP_ROOT $HOME
+WORKDIR $HOME
+COPY requirements.txt setup.sh ./
 COPY . ./
-RUN pipenv install
-EXPOSE 5000
-ENTRYPOINT ["/usr/src/app/setup.sh"]
+RUN python3 -m pip install -r ./requirements.txt
+ENTRYPOINT ["./setup.sh"]

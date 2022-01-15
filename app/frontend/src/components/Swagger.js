@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import '../App.css';
 
-const Table = () => {
+const Swagger = () => {
   return (
     <div>
       <a href="http://localhost:5000/api/docs">Swagger UI</a>
@@ -9,4 +9,4 @@ const Table = () => {
   )
 }
 
-export default Table;
+export default Swagger;

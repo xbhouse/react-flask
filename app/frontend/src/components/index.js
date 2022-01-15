@@ -1,1 +1,2 @@
-export { default as Table } from './Table';
+export { default as Swagger } from './Swagger';
+export { default as Button } from './Button';

@@ -5,7 +5,7 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile
-    image: "quay.io/bhouse/react-flask:1.0"
+    image: "quay.io/bhouse/react-flask:1.0.1"
     ports:
       - "5000:5000"
   frontend:

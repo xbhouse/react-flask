@@ -1,11 +1,15 @@
 import './App.css';
 import React from 'react';
-import { Table } from './components';
+import { Swagger, Button } from './components';
 
 function App() {
   return (
     <div className='App'>
-      <Table/>
+      <br/>
+      <Swagger/>
+      <br/>
+      <Button param={"users"}/>
+      <Button param={"blueprints"}/>
     </div>
   );
 }

@@ -7,10 +7,6 @@
     "termsOfService" : "http://swagger.io/terms/",
     "contact" : {
       "email" : "someone@somewhere.com"
-    },
-    "license" : {
-      "name" : "something",
-      "url" : "http://some-url"
     }
   },
   "tags" : [ {
@@ -54,15 +50,15 @@
         }
       }
     },
-    "/api/blueprints/{name}" : {
+    "/api/blueprints/{blueprint_id}" : {
       "get" : {
         "tags" : [ "blueprint" ],
-        "summary" : "get blueprint by name",
+        "summary" : "get blueprint by id",
         "operationId" : "getBlueprint",
         "parameters" : [ {
-          "name" : "name",
+          "name" : "id",
           "in" : "path",
-          "description" : "The blueprint to get",
+          "description" : "the blueprint to get",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -80,7 +76,7 @@
             }
           },
           "400" : {
-            "description" : "Invalid blueprint name supplied"
+            "description" : "invalid blueprint name supplied"
           },
           "404" : {
             "description" : "blueprint not found"
@@ -92,9 +88,9 @@
         "summary" : "updated blueprint",
         "operationId" : "updateBlueprint",
         "parameters" : [ {
-          "name" : "name",
+          "name" : "id",
           "in" : "path",
-          "description" : "name of blueprint to update",
+          "description" : "id of blueprint to update",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -125,9 +121,9 @@
         "summary" : "delete blueprint",
         "operationId" : "deleteBlueprint",
         "parameters" : [ {
-          "name" : "name",
+          "name" : "id",
           "in" : "path",
-          "description" : "name of blueprint to delete",
+          "description" : "id of blueprint to delete",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -184,7 +180,7 @@
         "parameters" : [ {
           "name" : "username",
           "in" : "path",
-          "description" : "The username that get",
+          "description" : "the user to get",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -202,10 +198,10 @@
             }
           },
           "400" : {
-            "description" : "Invalid username supplied"
+            "description" : "invalid username supplied"
           },
           "404" : {
-            "description" : "User not found"
+            "description" : "user not found"
           }
         }
       },
@@ -288,7 +284,7 @@
               "properties" : {
                 "cmp" : {
                   "type" : "string",
-                  "description" : "cmp request id, not sure what the abstraction tool provide"
+                  "description" : "cmp request id, tentative until we know what abstraction tool provides"
                 },
                 "status" : {
                   "type" : "string",
@@ -300,7 +296,7 @@
           "status" : {
             "type" : "string",
             "description" : "user status",
-            "enum" : [ "pending", "active", "incative" ]
+            "enum" : [ "pending", "active", "inactive" ]
           }
         }
       },
@@ -329,16 +325,16 @@
           },
           "exempt" : {
             "type" : "boolean",
-            "description" : "exemp blueprint from auto delete after X days"
+            "description" : "exempt blueprint from auto delete after X days"
           },
           "region" : {
             "type" : "string",
             "description" : "region/datacenter where blueprint is deployed",
-            "enum" : [ "NAM", "LTAM", "APAC", "EU" ]
+            "enum" : [ "NAM", "LATAM", "APAC", "EU" ]
           },
           "status" : {
             "type" : "string",
-            "description" : "status od the blueprint",
+            "description" : "status of the blueprint",
             "enum" : [ "pending", "active", "deleted" ]
           }
         }
