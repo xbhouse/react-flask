@@ -3,7 +3,6 @@
 # User endpoint testing
 echo "-----------------------------------------"
 echo "POST user"
-# POST user
 curl -X POST -H \
   "Content-Type: application/json" -d \
   '{"username": "bh123", "email": "guess@who.com", "cmpRequests": [], "status": "inactive"}' \
@@ -18,6 +17,7 @@ echo "-----------------------------------------"
 echo "PUT user by username "
 curl -X PUT \
   -d username=hb789 \
+  -d email=who@you.com \
   -d cmp=1 \
   -d cmpStatus=pending \
   http://localhost:5000/api/users/bh123

@@ -268,14 +268,13 @@
         "type" : "object",
         "required" : [ "id", "username" ],
         "properties" : {
-          "id" : {
-            "type" : "string",
-            "format" : "uuid",
-            "description" : "might not be necessary, since soeid is unique"
-          },
           "username" : {
             "type" : "string",
             "description" : "soe id"
+          },
+          "email" : {
+            "type" : "string",
+            "description" : "email"
           },
           "cmpRequests" : {
             "type" : "array",

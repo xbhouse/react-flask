@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.blueprints-container {
+  max-width: 100%;
+}
+
+.card-custom {
+  max-width: 328px;
+  margin: 0 auto;
+}
+
+.form-container {
+  max-width: 100%
+}
+
+.form-custom {
+  max-width: 328px;
+  margin: 0 auto;
+}

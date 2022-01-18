@@ -1,15 +1,22 @@
 import './App.css';
 import React from 'react';
-import { Swagger, Button } from './components';
+import { Header, List, Button, Form } from './components';
 
 function App() {
   return (
     <div className='App'>
+      <Header/>
       <br/>
-      <Swagger/>
+      <h1>Test API</h1>
       <br/>
-      <Button param={"users"}/>
-      <Button param={"blueprints"}/>
+      <Form/>
+      <br/>
+      <Button operation="Get" param="users"/>
+      <br/>
+      <br/>
+      <h1>Catalog</h1>
+      <br/>
+      <List/>
     </div>
   );
 }

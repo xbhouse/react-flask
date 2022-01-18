@@ -29,7 +29,7 @@ def get_docs():
   except:
     status = 404
     return jsonify("couldn't display swagger ui"), status
-  return response, 200
+  return response, status
 
 
 # User endpoints  -- mocked for now
@@ -49,9 +49,10 @@ def list_users():
 def create_user(): 
   req = request.get_json()
   username = req.get('username', None)
-  if not username:
+  email = req.get('email', None)
+  if not username or not email:
     status = 400
-    response = {'message': 'bad request, no username attribute in json payload'}
+    response = {'message': 'bad request, no username or email attribute in json payload'}
   elif USERS.get(username):
     status = 200
     response = {'message': 'user exists, setting status to active'}
@@ -60,6 +61,7 @@ def create_user():
     status = 201
     response = None
     USERS[username] = {'username': username,
+                       'email': email,
                        'cmpRequests': [],
                        'status': 'active' }
   return make_response(jsonify(response), status)
@@ -81,15 +83,17 @@ def get_user(username):
 @app.route('/api/users/<username>', methods=['PUT'])
 def update_user(username):
   args = request.values
-  newUsername = str(args['username']) # prob not necessary
+  newUsername = str(args['username']) 
+  email = str(args['email'])
   cmp = str(args['cmp'])
   cmpStatus = str(args['cmpStatus'])
   
   if USERS.get(username, None):
     del USERS[username]
     USERS[newUsername] = {'username': newUsername,
-                       'cmpRequests': [cmp, cmpStatus],
-                       'status': 'active' }
+                          'email': email,
+                          'cmpRequests': [cmp, cmpStatus],
+                          'status': 'active' }
     status = 200
     response = {'message': f'{username} updated'}
   else:
@@ -148,7 +152,7 @@ def create_blueprint():
                                     'createDate': datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
                                     'exempt': req.get('exempt', False),
                                     'region': req.get('region', 'NAM'),
-                                    'status': "pending"}
+                                    'status': 'pending'}
   else:
     status = 400
     response = {'message': 'bad request, no json payload'}
@@ -171,6 +175,7 @@ def get_blueprint(blueprint_id):
 @app.route('/api/blueprints/<blueprint_id>', methods=['PUT'])
 def update_blueprint(blueprint_id):
   return 0
+        
   # if blueprint exists
   # delete
   # add new one 
@@ -202,4 +207,4 @@ def search_blueprints(name, user):
 
 
 if __name__ == '__main__':
-  app.run(host='0.0.0.0', port=5000, use_reloader=True, debug=False)
+  app.run(host='0.0.0.0', use_reloader=True, debug=False)

@@ -4,15 +4,19 @@ import axios from "axios";
 const Button = (props) => {
   const [data, setData] = useState([]);
 
-  function handleClick() {
+  const handleClick = () => {
     var url = "http://localhost:5000/api/" + props.param;
-    axios.get(url)
-    .then((res) => setData(JSON.stringify(res.data)));
+
+    if(props.operation == 'Get') {
+      axios.get(url)
+      .then((res) => setData(JSON.stringify(res.data)));
+    }
+    
   }
 
   return (
     <div>
-      <button onClick={handleClick}>Get {props.param}</button>
+      <button onClick={handleClick}>{props.operation} {props.param}</button>
       <p>{data}</p>
     </div>
   )
