@@ -13,15 +13,19 @@ CORS(app)
 USERS = {}
 
 # Blueprint schema:
-# {"<blueprint_id>": {"blueprint_id": "<blueprint_id>", "name": "<name>", "cluster:" "<cluster>", "user": "<user>", "createDate": "<timestamp>",
+# {"<blueprint_id>": {"blueprint_id": "<blueprint_id>", "template_id": "<template_id>", "name": "<name>", "cluster:" "<cluster>", "user": "<user>", "createDate": "<timestamp>",
 #           "exempt": "<true|false>", "region": "<region>", "status": "<status>"}}
 
 BLUEPRINTS = {}
 
+# Blueprint template schema:
+# {"<template_id>": {"template_id": "<template_id>", "author": "<author>", "num_likes": "<num_likes>", "liked_by_users": []}}
+
+BLUEPRINT_TEMPLATES = {}
+
 
 # Swagger UI endpoint
-@app.route('/')
-@app.route('/api/docs')
+@app.route('/swagger')
 def get_docs():
   try:
     response = render_template('swaggerui.html')
@@ -34,8 +38,7 @@ def get_docs():
 
 # User endpoints  -- mocked for now
 
-
-# Get all users
+# List all users
 @app.route('/api/users', methods=['GET'])
 def list_users():
   response = []
@@ -49,10 +52,9 @@ def list_users():
 def create_user(): 
   req = request.get_json()
   username = req.get('username', None)
-  email = req.get('email', None)
-  if not username or not email:
+  if not username:
     status = 400
-    response = {'message': 'bad request, no username or email attribute in json payload'}
+    response = {'message': 'bad request, no username attribute in json payload'}
   elif USERS.get(username):
     status = 200
     response = {'message': 'user exists, setting status to active'}
@@ -61,13 +63,13 @@ def create_user():
     status = 201
     response = None
     USERS[username] = {'username': username,
-                       'email': email,
+                       'email': username + '@domain.com',
                        'cmpRequests': [],
                        'status': 'active' }
   return make_response(jsonify(response), status)
 
 
-# Display a user
+# Get a user by username
 @app.route('/api/users/<username>', methods=['GET'])
 def get_user(username):
   if USERS.get(username, None):
@@ -79,19 +81,18 @@ def get_user(username):
   return make_response(jsonify(response), status)
 
 
-# Update a user 
+# Update a user by username
 @app.route('/api/users/<username>', methods=['PUT'])
 def update_user(username):
   args = request.values
   newUsername = str(args['username']) 
-  email = str(args['email'])
   cmp = str(args['cmp'])
   cmpStatus = str(args['cmpStatus'])
   
   if USERS.get(username, None):
     del USERS[username]
     USERS[newUsername] = {'username': newUsername,
-                          'email': email,
+                          'email': newUsername + '@citi.com',
                           'cmpRequests': [cmp, cmpStatus],
                           'status': 'active' }
     status = 200
@@ -102,7 +103,7 @@ def update_user(username):
   return make_response(jsonify(response), status)
 
 
-# Delete a user
+# Delete a user by username
 @app.route('/api/users/<username>', methods=['DELETE'])
 def delete_user(username):
   if USERS.get(username, None):
@@ -116,7 +117,6 @@ def delete_user(username):
 
 
 # Blueprint endpoints -- mocked for now
-
 
 # List all blueprints
 @app.route('/api/blueprints', methods=['GET'])
@@ -174,7 +174,7 @@ def get_blueprint(blueprint_id):
 # Update a blueprint by ID
 @app.route('/api/blueprints/<blueprint_id>', methods=['PUT'])
 def update_blueprint(blueprint_id):
-  return 0
+  return 1
         
   # if blueprint exists
   # delete
@@ -184,7 +184,7 @@ def update_blueprint(blueprint_id):
 
 # Delete a blueprint by ID
 @app.route('/api/blueprints/<blueprint_id>', methods=['DELETE'])
-def delete_blueprint(name):
+def delete_blueprint(blueprint_id):
   if BLUEPRINTS.get(blueprint_id, None):
     BLUEPRINTS[blueprint_id]['status'] = 'inactive'
     status = 204
@@ -195,8 +195,71 @@ def delete_blueprint(name):
   return make_response(jsonify(response), status)
 
 
+# Create a blueprint template
+@app.route('/api/blueprint-templates', methods=['POST'])
+def create_template(): 
+  template_id = f'{uuid4()}'
+  #author = request.headers.get('X-Forwarded-User') commenting out to test locally pre-OCP
+  req = request.get_json()
+  author = req.get('author', None)
+  if not author:
+    status = 400
+    response = {'message': 'bad request, missing author'}
+  else: 
+    status = 201
+    response = None
+    BLUEPRINT_TEMPLATES[template_id] = {'template_id': template_id,
+                                        'author': author,
+                                        'num_likes': 0,
+                                        'liked_by_users': []}
+  return make_response(jsonify(response), status)
+
+
+  # Get a blueprint template by ID
+  @app.route('/api/blueprint-templates/<template_id>', methods=['GET'])
+  def get_template(template_id):
+    if BLUEPRINT_TEMPLATES.get(template_id, None):
+      status = 200
+      response = BLUEPRINT_TEMPLATES[template_id]
+    else:
+      status = 404
+      response = {'message': f'blueprint template {template_id} does not exist'}
+    return make_response(jsonify(response), status)
+
+
+# List all blueprint templates
+@app.route('/api/blueprint-templates', methods=['GET'])
+def list_templates():
+  response = []
+  for _, value in BLUEPRINT_TEMPLATES.items():
+    response.append(value)
+  return jsonify(response), 200
+
+
+# Add a like to a blueprint template by ID
+@app.route('/api/blueprint-templates/<template_id>', methods=['PUT'])
+def like_template(template_id):
+  #author = request.headers.get('X-Forwarded-User') commenting out to test locally pre-OCP
+  args = request.values
+  user = str(args['user'])
+  if BLUEPRINT_TEMPLATES.get(template_id, None):
+    if author not in BLUEPRINT_TEMPLATES[template_id]['liked_by_users']:
+      BLUEPRINT_TEMPLATES[template_id]['num_likes'] += 1
+      BLUEPRINT_TEMPLATES[template_id]['liked_by_users'].append(user)
+      status = 200
+      response = {'message': f'blueprint template {template_id} liked by user {user}'}
+    else:
+      status = 404
+      response = {'message': f'user {user} already liked template {template_id}'}
+  else:
+    status = 404
+    response = {'message': f'blueprint template {template_id} does not exist'}
+  return make_response(jsonify(response), status)
+
+
 # Helpers
 
+# Find a blueprint
 def search_blueprints(name, user):
   found = False
   for _, value in BLUEPRINTS.items():

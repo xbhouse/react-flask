@@ -15,8 +15,133 @@
   }, {
     "name" : "user",
     "description" : "operations on user"
+  }, {
+    "name" : "template",
+    "description" : "operations on template"
   } ],
   "paths" : {
+    "/api/blueprint-templates" : {
+      "get" : {
+        "tags" : [ "template" ],
+        "summary" : "get all templates",
+        "operationId" : "listTemplates",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "template" ],
+        "summary" : "create template",
+        "operationId" : "createTemplate",
+        "responses" : {
+          "default" : {
+            "description" : "successful operation"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/blueprint-template"
+              }
+            }
+          },
+          "description" : "create blueprint template object",
+          "required" : true
+        }
+      }
+    },
+    "/api/blueprint-templates/{template_id}" : {
+      "get" : {
+        "tags" : [ "template" ],
+        "summary" : "get template by id",
+        "operationId" : "getTemplate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "the template to get",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/blueprint-template"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "invalid template id supplied"
+          },
+          "404" : {
+            "description" : "template not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "template" ],
+        "summary" : "updated template",
+        "operationId" : "updateTemplate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of template to update",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid template supplied"
+          },
+          "404" : {
+            "description" : "template not found"
+          }
+        },
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/blueprint-template"
+              }
+            }
+          },
+          "description" : "updated template object",
+          "required" : true
+        }
+      },
+      "delete" : {
+        "tags" : [ "template" ],
+        "summary" : "delete template",
+        "operationId" : "deleteTemplate",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of template to delete",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "invalid template supplied"
+          },
+          "404" : {
+            "description" : "template not found"
+          }
+        }
+      }
+    },
     "/api/blueprints" : {
       "get" : {
         "tags" : [ "blueprint" ],
@@ -335,6 +460,31 @@
             "type" : "string",
             "description" : "status of the blueprint",
             "enum" : [ "pending", "active", "deleted" ]
+          }
+        }
+      },
+      "blueprint-template" : {
+        "type" : "object",
+        "required" : [ "id", "author", "num_likes" ],
+        "properties" : {
+          "id" : {
+            "type" : "string",
+            "format" : "uuid"
+          },
+          "author" : {
+            "type" : "string"
+          },
+          "num_likes" : {
+            "type" : "string",
+            "description" : "number of likes on a template"
+          },
+          "liked_by_users" : {
+            "type" : "array",
+            "description" : "list of users that liked this template",
+            "items" : {
+              "type" : "string",
+              "description": "user"
+            }
           }
         }
       }

@@ -1,0 +1,36 @@
+:root {
+  --global--spacer--md: 20px;
+  --global--spacer--lg: 100px;
+  --global--spacer--xlg: 200px;
+  --global--ViewHeight--100: 100vh;
+  --global--ItemPadding--sm: 10px;
+  --global--ItemPadding--md: 20px;
+  --global--ItemPadding--lg: 100px;
+}
+
+.app-container {
+  align-items: center;
+  height: 100vh;
+}
+
+.form-container {
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--global--spacer--lg);
+  margin-left: var(--global--spacer--md);
+  margin-right: var(--global--spacer--md);
+}
+
+.template-list-container {
+  display: flex;
+}
+
+
+.header-item {
+  padding: var(--global--ItemPadding--sm);
+}
+
+.button-container {
+  padding: var(--global--ItemPadding--md);
+}
+

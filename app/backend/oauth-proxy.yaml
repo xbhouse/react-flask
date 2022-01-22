@@ -1,0 +1,102 @@
+# https://linuxera.org/oauth-proxy-secure-applications-openshift/
+# https://github.com/openshift/oauth-proxy
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: blueprint-test
+---
+# create an oauth-proxy service account and ensure it will use the route "oauth-proxy"
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: blueprint
+  namespace: blueprint-test
+  annotations:
+    serviceaccounts.openshift.io/oauth-redirectreference.primary: '{"kind":"OAuthRedirectReference","apiVersion":"v1","reference":{"kind":"Route","name":"blueprint"}}'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: blueprint-test
+  annotations:
+    # the annotatation causes openshift to craete a serving cert and key, which will be used by oauth-proxy container
+    service.alpha.openshift.io/serving-cert-secret-name: oauth-proxy-tls
+spec:
+  ports:
+  - name: oauth-proxy
+    port: 443
+    targetPort: 8443
+  - name: bp-backend    # these 2 ports not required, included for documentation only; only oauth-proxy exposed
+    port: 5000
+    targetPort: 5000
+  - name: bp-frontend
+    port: 8000
+    targetPort: 8000
+  selector:
+    app: authenticated-app
+---
+# create a secure connection to the oauth-proxy
+apiVersion: v1
+kind: Route
+metadata:
+  name: blueprint
+  namespace: blueprint-test
+spec:
+#  host: "blueprint.$(oc get ingresses.config/cluster -o jsonpath={.spec.domain})"
+  tls:
+    termination: Reencrypt
+  to:
+    kind: Service
+    name: app
+  port:
+    targetPort: oauth-proxy
+---
+# launch the app with oauth-proxy as a sidecar
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authenticated-app
+  namespace: blueprint-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authenticated-app
+  template:
+    metadata:
+      labels:
+        app: authenticated-app
+    spec:
+      containers:
+      - name: oauth-proxy
+        image: openshift/oauth-proxy:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8443
+          name: public
+        args:
+        - --https-address=:8443
+        - --provider=openshift
+        - --openshift-service-account=blueprint
+        - --upstream=http://localhost:5000/       # swagger
+        - --upstream=http://localhost:5000/api    # api backend
+        - --upstream=http://localhost:8000/app    # app frontend
+        - --tls-cert=/etc/tls/private/tls.crt
+        - --tls-key=/etc/tls/private/tls.key
+        - --cookie-secret=OHpq3J2iSSqL0w8isP3dDNnJ9aRQM9BMblzFsslWvm7
+        - -pass-user-headers   # pass the login user as X-Forwarded-User header to upstream app
+        - -pass-access-token   # pass the bearer token as X-Forwarded-Access-Token header to upstream app; probably not needed
+        volumeMounts:
+        - mountPath: /etc/tls/private
+          name: oauth-proxy-tls
+      - name: bp-backend    # this listen on port 5000
+        image: quay.io/bhouse/bp-backend:1.0
+      - name: bp-frontend    # this listen on port 8000
+        image: quay.io/bhouse/testing-ui:1.0
+      serviceAccountName: blueprint
+      volumes:
+      - name: oauth-proxy-tls
+        secret:
+          secretName: oauth-proxy-tls
