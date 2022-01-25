@@ -8,20 +8,13 @@ import {
   ActionGroup,
   Button
 } from '@patternfly/react-core';
-import {
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default class CreateForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 'please choose',
-      value1: '',
-      value2: '',
-      value3: ''
+      value: 'please choose'
     };
     this.onChange = (value, event) => {
       this.setState({ value });

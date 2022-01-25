@@ -1,7 +1,6 @@
 import React from 'react';
-import { Gallery, Button } from '@patternfly/react-core';
+import { Gallery } from '@patternfly/react-core';
 import Blueprint from './Blueprint.js';
-
 
 const BlueprintLayout = () => {
   return (

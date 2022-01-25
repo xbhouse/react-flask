@@ -9,24 +9,18 @@ import {
   PageHeaderTools,
   PageHeaderToolsGroup,
   PageHeaderToolsItem,
-  PageSidebar,
-  PageSection,
-  PageSectionVariants
+  PageSidebar
 } from '@patternfly/react-core';
-import {
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
-import CreateForm from '../../components/CreateForm.js';
-import Swagger from '../../components/Swagger.js';
-import Logout from '../../components/Logout.js';
+import { Link } from "react-router-dom";
+import Swagger from '../components/Swagger.js';
+import Logout from '../components/Logout.js';
 
-export default class CreateAppPage extends React.Component {
+export default class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavOpen: true
+      isNavOpen: true,
+      pageContent: props.pageContent
     };
     this.onNavToggle = () => {
       this.setState({
@@ -35,8 +29,14 @@ export default class CreateAppPage extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.pageContent !== this.props.pageContent)
+      this.setState({pageContent: this.props.pageContent})
+  }
+
+
   render() {
-    const { isNavOpen } = this.state;
+    const { isNavOpen, pageContent } = this.state;
 
     const logoProps = {
       href: '/home',
@@ -78,26 +78,16 @@ export default class CreateAppPage extends React.Component {
         </NavGroup>
         <NavGroup title="Blueprints">
           <NavList>
-            <NavItem><Link to="/my-blueprints">My blueprint</Link></NavItem>
+            <NavItem><Link to="/my-blueprint">My blueprint</Link></NavItem>
+            <NavItem><Link to="/order-template">Order a blueprint</Link></NavItem>
           </NavList>
         </NavGroup>
-        <NavGroup title="Templates">
-          <NavList>
-            <NavItem><Link to="/order-template">Order a template</Link></NavItem>
-          </NavList>
-        </NavGroup>
+
       </Nav>} isNavOpen={isNavOpen} />;
 
     return (
       <Page header={Header} sidebar={Sidebar}>
-        <PageSection variant={PageSectionVariants.darker}>
-          <h1 className="page-title">Create an application</h1>
-        </PageSection>
-        <PageSection variant={PageSectionVariants.light}>
-          <div className="form-container">
-           <CreateForm />
-          </div>
-        </PageSection>
+        {pageContent}
       </Page>
     );
   }

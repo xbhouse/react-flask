@@ -5,20 +5,15 @@ import {
   CardTitle,
   CardBody,
   CardFooter,
-  Gallery,
   Title,
   DescriptionList,
   DescriptionListGroup,
   DescriptionListTerm,
   DescriptionListDescription,
-  Divider
 } from '@patternfly/react-core';
 import {
-  Routes,
-  Route,
   Link
 } from "react-router-dom";
-import CreateAppPage from '../pages/userViews/CreateAppPage.js';
 
 const Template = () => {
   const [numLikes, setNumLikes] = useState(0);

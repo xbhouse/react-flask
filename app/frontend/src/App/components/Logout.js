@@ -1,5 +1,9 @@
 import React from 'react';
-import { Dropdown, DropdownItem, DropdownSeparator, KebabToggle } from '@patternfly/react-core';
+import { 
+  Dropdown, 
+  DropdownItem, 
+  KebabToggle 
+} from '@patternfly/react-core';
 
 export default class Logout extends React.Component {
   constructor(props) {
@@ -19,7 +23,7 @@ export default class Logout extends React.Component {
       this.onFocus();
     };
     this.onFocus = () => {
-      const element = document.getElementById('toggle-id-6');
+      const element = document.getElementById('toggle-id');
       element.focus();
     };
   }
@@ -32,7 +36,7 @@ export default class Logout extends React.Component {
     return (
       <Dropdown
         onSelect={this.onSelect}
-        toggle={<KebabToggle onToggle={this.onToggle} id="toggle-id-6" />}
+        toggle={<KebabToggle onToggle={this.onToggle} id="toggle-id"/>}
         isOpen={isOpen}
         isPlain
         dropdownItems={dropdownItems}

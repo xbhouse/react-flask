@@ -1,20 +1,15 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import './app.css';
-import CreateAppPage from './pages/userViews/CreateAppPage.js';
-import OrderTemplatePage from './pages/userViews/OrderTemplatePage.js';
-import TemplateListPage from './pages/userViews/TemplateListPage.js';
-import TicketListPage from './pages/userViews/TicketListPage.js';
-import AdminBlueprintListPage from './pages/adminViews/BlueprintListPage.js';
-import UserBlueprintListPage from './pages/userViews/BlueprintListPage.js';
-import MakeRequestPage from './pages/userViews/MakeRequestPage.js';
-import UserPage from './pages/userViews/UserPage.js';
-import AboutPage from './pages/AboutPage.js';
+import OrderTemplate from './components/OrderTemplate.js';
+import AdminPage from './pages/AdminPage.js';
+import MakeRequest from './components/MakeRequest.js';
+import CreateApp from './components/CreateApp.js';
+import RequestList from './components/RequestList.js';
+import UserPage from './pages/UserPage.js';
+import About from './components/About.js';
+import BlueprintView from './components/BlueprintView.js';
+import AllBlueprints from './components/AllBlueprints.js';
 
 
 export default class App extends Component {
@@ -23,24 +18,13 @@ export default class App extends Component {
     return (
       <div className="app-container">
         <Routes>
-          <Route path="/" element={
-            <div>
-              <a href="http://localhost:5000/create">Create an app</a>
-              <br/>
-              <a href="http://localhost:5000/blueprints">See all users' blueprints (admin only)</a>
-              <br/>
-              <a href="http://localhost:5000/templates">See available templates</a>
-              <br/>
-            </div>}></Route>
-          <Route path="/create" element={<CreateAppPage/>}></Route>
-          <Route path="/blueprints" element={<AdminBlueprintListPage/>}></Route>
-          <Route path="/order-template" element={<OrderTemplatePage/>}></Route>
-          <Route path="/submit" ></Route>
-          <Route path="/about" element={<AboutPage/>}></Route>
-          <Route path="/my-blueprints" element={<UserBlueprintListPage/>}></Route>
-          <Route path="/my-templates" element={<TemplateListPage/>}></Route>
-          <Route path="/my-requests" element={<TicketListPage/>}></Route>
-          <Route path="/make-request" element={<MakeRequestPage/>}></Route>
+          <Route path="/about" element={<UserPage pageContent={<About/>}/>}></Route>
+          <Route path="/my-requests" element={<UserPage pageContent={<RequestList/>}/>}></Route>
+          <Route path="/make-request" element={<UserPage pageContent={<MakeRequest/>}/>}></Route>
+          <Route path="/order-template" element={<UserPage pageContent={<OrderTemplate/>}/>}></Route>
+          <Route path="/create" element={<UserPage pageContent={<CreateApp/>}/>}></Route>
+          <Route path="/my-blueprint" element={<UserPage pageContent={<BlueprintView/>}/>}></Route>
+          <Route path="/blueprints" element={<AdminPage pageContent={<AllBlueprints/>}/>}></Route>
         </Routes>
       </div>
     );

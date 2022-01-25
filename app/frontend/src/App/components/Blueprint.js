@@ -1,5 +1,17 @@
 import React from 'react';
-import {Button, Card, CardHeader, CardActions, CardTitle, CardBody, CardFooter, Checkbox, Dropdown, DropdownItem, DropdownSeparator, KebabToggle} from '@patternfly/react-core';
+import {
+  Button, 
+  Card, 
+  CardHeader, 
+  CardActions, 
+  CardTitle, 
+  CardBody, 
+  CardFooter, 
+  Checkbox, 
+  Dropdown, 
+  DropdownItem, 
+  KebabToggle
+} from '@patternfly/react-core';
 
 const Blueprint = () => {
   const [isOpen, setIsOpen] = React.useState(false);

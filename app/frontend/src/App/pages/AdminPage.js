@@ -9,24 +9,18 @@ import {
   PageHeaderTools,
   PageHeaderToolsGroup,
   PageHeaderToolsItem,
-  PageSidebar,
-  PageSection,
-  PageSectionVariants
+  PageSidebar
 } from '@patternfly/react-core';
-import {
-  Routes,
-  Route,
-  Link
-} from "react-router-dom";
-import TemplateLayout from '../../components/TemplateLayout.js';
-import Swagger from '../../components/Swagger.js';
-import Logout from '../../components/Logout.js';
+import { Link } from "react-router-dom";
+import Swagger from '../components/Swagger.js';
+import Logout from '../components/Logout.js';
 
-export default class AboutPage extends React.Component {
+export default class AdminPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isNavOpen: true
+      isNavOpen: true,
+      pageContent: props.pageContent
     };
     this.onNavToggle = () => {
       this.setState({
@@ -35,8 +29,13 @@ export default class AboutPage extends React.Component {
     };
   }
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.pageContent !== this.props.pageContent)
+      this.setState({pageContent: this.props.pageContent})
+  }
+
   render() {
-    const { isNavOpen } = this.state;
+    const { isNavOpen, pageContent } = this.state;
 
     const logoProps = {
       href: '/home',
@@ -58,7 +57,7 @@ export default class AboutPage extends React.Component {
               <Swagger/>
             </PageHeaderToolsItem>
             <PageHeaderToolsItem className="header-item">
-              <Link to="/user-details">username</Link> <Logout/>
+              <Link to="/admin-details">admin</Link> <Logout/>
             </PageHeaderToolsItem>
           </PageHeaderToolsGroup>
         </PageHeaderTools>}
@@ -72,30 +71,30 @@ export default class AboutPage extends React.Component {
       <Nav>
         <NavGroup title="Requests">
           <NavList>
-            <NavItem><Link to="/my-requests">My requests</Link></NavItem>
-            <NavItem><Link to="/make-request">Make a request</Link></NavItem>
+            <NavItem><Link to="/requests">See all requests</Link></NavItem>
           </NavList>
         </NavGroup>
         <NavGroup title="Blueprints">
           <NavList>
-            <NavItem><Link to="/my-blueprints">My blueprint</Link></NavItem>
+            <NavItem><Link to="/blueprints">See all blueprints</Link></NavItem>
+            <NavItem><Link to="/order-template">Order a blueprint</Link></NavItem>
           </NavList>
         </NavGroup>
-        <NavGroup title="Templates">
+        <NavGroup title="Clusters">
           <NavList>
-            <NavItem><Link to="/order-template">Order a template</Link></NavItem>
+            <NavItem><Link to="/clusters">See all clusters</Link></NavItem>
           </NavList>
         </NavGroup>
-      </Nav>} isNavOpen={isNavOpen} />;
+        <NavGroup title="Administrative">
+          <NavList>
+            <NavItem><Link to="/settings">Adjust settings</Link></NavItem>
+          </NavList>
+        </NavGroup>
+      </Nav>} isNavOpen={isNavOpen}/>;
 
     return (
       <Page header={Header} sidebar={Sidebar}>
-        <PageSection variant={PageSectionVariants.darker}>
-          <h1 className="page-title">My templates</h1>
-        </PageSection>
-        <PageSection variant={PageSectionVariants.light}>
-          
-        </PageSection>
+        {pageContent}
       </Page>
     );
   }
