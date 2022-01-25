@@ -22,7 +22,8 @@ import TemplateLayout from '../../components/TemplateLayout.js';
 import Swagger from '../../components/Swagger.js';
 import Logout from '../../components/Logout.js';
 
-export default class AboutPage extends React.Component {
+
+export default class TemplateListPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -91,10 +92,12 @@ export default class AboutPage extends React.Component {
     return (
       <Page header={Header} sidebar={Sidebar}>
         <PageSection variant={PageSectionVariants.darker}>
-          <h1 className="page-title">My templates</h1>
+          <h1 className="page-title">Order a template</h1>
         </PageSection>
         <PageSection variant={PageSectionVariants.light}>
-          
+          <div className="template-list-container">
+            <TemplateLayout/>
+          </div>
         </PageSection>
       </Page>
     );

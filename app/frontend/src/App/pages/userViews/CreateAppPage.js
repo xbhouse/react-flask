@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Nav,
+  NavGroup,
   NavList,
   NavItem,
   Page,
@@ -12,7 +13,14 @@ import {
   PageSection,
   PageSectionVariants
 } from '@patternfly/react-core';
-import HorizontalForm from '../../components/Form.js';
+import {
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import CreateForm from '../../components/CreateForm.js';
+import Swagger from '../../components/Swagger.js';
+import Logout from '../../components/Logout.js';
 
 export default class CreateAppPage extends React.Component {
   constructor(props) {
@@ -31,7 +39,7 @@ export default class CreateAppPage extends React.Component {
     const { isNavOpen } = this.state;
 
     const logoProps = {
-      href: 'https://openshift.com',
+      href: '/home',
       onClick: () => console.log('clicked logo'),
       target: '_blank'
     };
@@ -44,13 +52,13 @@ export default class CreateAppPage extends React.Component {
         {<PageHeaderTools>
           <PageHeaderToolsGroup>
             <PageHeaderToolsItem className="header-item">
-              <a href>about</a>
+              <Link to="/about">about</Link>
             </PageHeaderToolsItem>
             <PageHeaderToolsItem className="header-item">
-              <a href>API docs</a>
+              <Swagger/>
             </PageHeaderToolsItem>
             <PageHeaderToolsItem className="header-item">
-              <a href>username</a>
+              <Link to="/user-details">username</Link> <Logout/>
             </PageHeaderToolsItem>
           </PageHeaderToolsGroup>
         </PageHeaderTools>}
@@ -62,11 +70,22 @@ export default class CreateAppPage extends React.Component {
 
     const Sidebar = <PageSidebar nav={
       <Nav>
-        <NavList>
-          <NavItem>Tickets</NavItem>
-          <NavItem>Blueprints</NavItem>
-          <NavItem>Template orders</NavItem>
-        </NavList>
+        <NavGroup title="Requests">
+          <NavList>
+            <NavItem><Link to="/my-requests">My requests</Link></NavItem>
+            <NavItem><Link to="/make-request">Make a request</Link></NavItem>
+          </NavList>
+        </NavGroup>
+        <NavGroup title="Blueprints">
+          <NavList>
+            <NavItem><Link to="/my-blueprints">My blueprint</Link></NavItem>
+          </NavList>
+        </NavGroup>
+        <NavGroup title="Templates">
+          <NavList>
+            <NavItem><Link to="/order-template">Order a template</Link></NavItem>
+          </NavList>
+        </NavGroup>
       </Nav>} isNavOpen={isNavOpen} />;
 
     return (
@@ -76,7 +95,7 @@ export default class CreateAppPage extends React.Component {
         </PageSection>
         <PageSection variant={PageSectionVariants.light}>
           <div className="form-container">
-           <HorizontalForm />
+           <CreateForm />
           </div>
         </PageSection>
       </Page>

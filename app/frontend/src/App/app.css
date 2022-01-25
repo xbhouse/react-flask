@@ -6,11 +6,16 @@
   --global--ItemPadding--sm: 10px;
   --global--ItemPadding--md: 20px;
   --global--ItemPadding--lg: 100px;
+  --global--FontSize--xl: 2rem;
 }
 
 .app-container {
   align-items: center;
   height: 100vh;
+}
+
+.page-title {
+  font-size: var(--global--FontSize--xl);
 }
 
 .form-container {

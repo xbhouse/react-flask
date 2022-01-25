@@ -18,9 +18,9 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import TemplateLayout from '../../components/TemplateLayout.js';
-import Swagger from '../../components/Swagger.js';
-import Logout from '../../components/Logout.js';
+import TemplateLayout from '../components/TemplateLayout.js';
+import Swagger from '../components/Swagger.js';
+import Logout from '../components/Logout.js';
 
 export default class AboutPage extends React.Component {
   constructor(props) {
@@ -91,7 +91,7 @@ export default class AboutPage extends React.Component {
     return (
       <Page header={Header} sidebar={Sidebar}>
         <PageSection variant={PageSectionVariants.darker}>
-          <h1 className="page-title">My templates</h1>
+          <h1 className="page-title">About Helix</h1>
         </PageSection>
         <PageSection variant={PageSectionVariants.light}>
           

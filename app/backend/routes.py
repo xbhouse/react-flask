@@ -175,11 +175,6 @@ def get_blueprint(blueprint_id):
 @app.route('/api/blueprints/<blueprint_id>', methods=['PUT'])
 def update_blueprint(blueprint_id):
   return 1
-        
-  # if blueprint exists
-  # delete
-  # add new one 
-  # return response
 
 
 # Delete a blueprint by ID

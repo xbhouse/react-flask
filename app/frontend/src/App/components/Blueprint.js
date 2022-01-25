@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardHeader, CardActions, CardTitle, CardBody, CardFooter, Checkbox, Dropdown, DropdownItem, DropdownSeparator, KebabToggle} from '@patternfly/react-core';
+import {Button, Card, CardHeader, CardActions, CardTitle, CardBody, CardFooter, Checkbox, Dropdown, DropdownItem, DropdownSeparator, KebabToggle} from '@patternfly/react-core';
 
 const Blueprint = () => {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -13,15 +13,7 @@ const Blueprint = () => {
     setCheck1(checked);
   };
 
-  const dropdownItems = [<DropdownItem key="link">Link</DropdownItem>, <DropdownItem key="action" component="button">
-      Action
-    </DropdownItem>, <DropdownItem key="disabled link" isDisabled>
-      Disabled Link
-    </DropdownItem>, <DropdownItem key="disabled action" isDisabled component="button">
-      Disabled Action
-    </DropdownItem>, <DropdownSeparator key="separator" />, <DropdownItem key="separated link">Separated Link</DropdownItem>, <DropdownItem key="separated action" component="button">
-      Separated Action
-    </DropdownItem>];
+  const dropdownItems = [<DropdownItem key="edit">Edit</DropdownItem>];
 
   return (
     <Card>
@@ -34,8 +26,13 @@ const Blueprint = () => {
           Blueprint name
         </CardTitle>
       </CardHeader>
-      <CardBody>Username</CardBody>
-      <CardFooter>Description of app</CardFooter>
+      <CardBody>Creator's username</CardBody>
+      <CardFooter>
+        Description of app
+        <div className="button-container">
+          <Button variant="primary">Go to app</Button>
+        </div>
+      </CardFooter>
     </Card>
   )
 };

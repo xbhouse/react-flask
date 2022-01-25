@@ -91,7 +91,7 @@ export default class AboutPage extends React.Component {
     return (
       <Page header={Header} sidebar={Sidebar}>
         <PageSection variant={PageSectionVariants.darker}>
-          <h1 className="page-title">My templates</h1>
+          <h1 className="page-title">My requests</h1>
         </PageSection>
         <PageSection variant={PageSectionVariants.light}>
           
